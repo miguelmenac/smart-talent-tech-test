@@ -1,0 +1,19 @@
+<p-card>
+    <ng-template #header>
+        <img [src]="hotel.image" alt="">
+    </ng-template>
+    <ng-template #title>
+        <h3 class="text-primary">{{hotel.name}}</h3>
+    </ng-template>
+    <span>
+        <p>
+            <i class="pi pi-map-marker" style="color: slateblue"></i>
+            {{hotel.location}}
+        </p>
+    </span>
+    <ng-template #footer>
+        <div class="flex gap-4 mt-1">
+            <p-button rounded>Ver detalle</p-button>
+        </div>
+    </ng-template>
+</p-card>

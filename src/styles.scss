@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/primeflex/primeflex.css';
+@import '../node_modules/primeflex/themes/primeone-light.css';
+@import "../node_modules/primeicons/primeicons.css";
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}

@@ -1,0 +1,32 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="flex flex-row gap-3">
+        <div class="flex-column">
+            <p-floatlabel variant="in">
+                <input pInputText id="in_label" formControlName="name" autocomplete="off" />
+                <label for="in_label">Nombre del hotel</label>
+            </p-floatlabel>
+        </div>
+        <div class="flex-column">
+            <p-floatlabel variant="in">
+                <p-autocomplete size="small" formControlName="location" [suggestions]="cities"
+                    (completeMethod)="search($event)" inputId="location" />
+                <label for="destination">Destino</label>
+            </p-floatlabel>
+        </div>
+        <div class="flex-column">
+            <p-floatlabel variant="in">
+                <input pInputText id="in_label" formControlName="address" autocomplete="off" />
+                <label for="in_label">Nombre del hotel</label>
+            </p-floatlabel>
+        </div>
+        <div class="flex-column">
+            <p-floatlabel variant="in">
+                <p-toggleswitch formControlName="isEnabled"> </p-toggleswitch>
+            </p-floatlabel>
+        </div>
+    </div>
+
+    <p-button label="Crear" icon="pi pi-check" severity="success" />
+
+
+</form>

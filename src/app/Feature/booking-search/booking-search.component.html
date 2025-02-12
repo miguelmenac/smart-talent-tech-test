@@ -1,0 +1,44 @@
+<p-card>
+    <h1 class="text-primary">Alojamientos</h1>
+    <form [formGroup]="formGroup" (ngSubmit)="submitData()">
+        <div class="flex flex-column md:flex-row justify-content-center align-items-center gap-2">
+
+            <div class="flex-column">
+                <p-floatlabel variant="in">
+                    <p-autocomplete size="small" formControlName="destination" [suggestions]="cities"
+                        (completeMethod)="search($event)" inputId="destination" />
+                    <label for="destination">Destino</label>
+                </p-floatlabel>
+
+            </div>
+            <div class="flex-column">
+                <p-floatlabel variant="in">
+                    <p-datepicker formControlName="initialDate" size="small" inputId="in_label" showIcon
+                        iconDisplay="input" />
+                    <label for="in_label">Entrada</label>
+                </p-floatlabel>
+
+            </div>
+            <div class="flex-column">
+                <p-floatlabel variant="in">
+                    <p-datepicker formControlName="endDate" size="small" inputId="out_label" showIcon
+                        iconDisplay="input" />
+                    <label for="out_label">Salida</label>
+                </p-floatlabel>
+
+            </div>
+            <div class="flex-column">
+                <p-floatlabel variant="in">
+                    <p-inputnumber mode="decimal" [max]="6" size="small" [useGrouping]="false" inputId="people"
+                        formControlName="numberOfPeople" />
+                    <label for="people"># Personas</label>
+                </p-floatlabel>
+            </div>
+            <div class="flex-column">
+                <p-button [disabled]="formGroup.invalid" icon="pi pi-search" type="submit" severity="success" size="large">
+
+                </p-button>
+            </div>
+        </div>
+    </form>
+</p-card>

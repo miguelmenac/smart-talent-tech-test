@@ -1,0 +1,36 @@
+<p-card>
+    <p-table [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="hotels.length > 10" [value]="hotels"
+        [scrollable]="true" scrollHeight="400px" [globalFilterFields]="['name', 'location', 'address', 'status']"
+        [tableStyle]="{'min-width': '50rem'}">
+        <ng-template #header>
+            <tr>
+                <th pSortableColumn="name" >Nombre <p-sortIcon field="name" /></th>
+                <th pSortableColumn="location">Ubicación <p-sortIcon field="location" /></th>
+                <th pSortableColumn="address">Dirección <p-sortIcon field="address" /></th>
+                <th pSortableColumn="status">Activo <p-sortIcon field="status" /></th>
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="name" placeholder="Buscar por nombre"
+                        ariaLabel="Filter Name"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="location" placeholder="Buscar por ubicación"
+                        ariaLabel="Filter location"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="address" placeholder="Buscar por dirección"
+                        ariaLabel="Filter address"></p-columnFilter>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-hotel>
+            <tr>
+                <td>{{hotel.name}}</td>
+                <td>{{hotel.location}}</td>
+                <td>{{hotel.address}}</td>
+                <td>{{ hotel.enabled ? 'Sí' : 'No'}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>
