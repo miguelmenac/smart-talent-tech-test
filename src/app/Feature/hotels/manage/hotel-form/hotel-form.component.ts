@@ -1,26 +1,53 @@
-import { Component, inject } from '@angular/core';
-import { ComponentImports } from './hotel.imports';
+import { Component, inject, OnInit } from '@angular/core';
+import { ComponentImports } from './hotel-form.imports';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { DatosAbiertosService } from '../../../../Core/services/datos-abiertos.service';
+import { roomTypes } from '../../../../Core/models/hotel';
+import { HotelsService } from '../../services/hotels.service';
+import { ToastService } from '../../../../Shared/Services/toast.service';
 
 @Component({
   selector: 'app-hotel-form',
   imports: ComponentImports,
-  providers: [DatosAbiertosService],
+  providers: [DatosAbiertosService, HotelsService, ToastService],
   templateUrl: './hotel-form.component.html',
   styleUrl: './hotel-form.component.scss'
 })
-export class HotelFormComponent {
+export class HotelFormComponent implements OnInit {
   form!: FormGroup;
   cities: string[] = [];
   citiesCopy: string[] = [];
+  roomTypes = [
+    {
+      name: roomTypes.single
+    },
+    {
+      name: roomTypes.double
+    },
+    {
+      name: roomTypes.familiar
+    },
+  ];
 
   datosAbiertosService = inject(DatosAbiertosService);
+  hotelsService = inject(HotelsService);
+  toastService = inject(ToastService);
 
   ngOnInit(): void {
     this.buildForm();
     this.queryCities();
+  }
+
+  createDefaultRoom(): { [key: string]: FormControl } {
+    return {
+      floor: new FormControl(null, [Validators.required]),
+      idRoom: new FormControl(null, [Validators.required]),
+      price: new FormControl(null, [Validators.required]),
+      type: new FormControl(null, [Validators.required]),
+      capacity: new FormControl(null, [Validators.required]),
+      enabled: new FormControl(true, [Validators.required]),
+    };
   }
 
   buildForm(): void {
@@ -29,9 +56,15 @@ export class HotelFormComponent {
       location: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
       image: new FormControl(''),
-      isEnabled: new FormControl<boolean>(false)
+      isEnabled: new FormControl(true),
+      rooms: new FormArray([new FormGroup(this.createDefaultRoom())])
     });
-    console.log('this.form', this.form)
+  }
+
+
+
+  get rooms(): FormArray {
+    return this.form.controls['rooms'] as FormArray;
   }
 
   queryCities(): void {
@@ -39,6 +72,8 @@ export class HotelFormComponent {
       next: (resp) => { this.cities = resp; this.citiesCopy = resp },
     });
   }
+
+
 
   search(event: AutoCompleteCompleteEvent): void {
     const query = event.query.toLocaleLowerCase();
@@ -48,7 +83,18 @@ export class HotelFormComponent {
     }
   }
 
-  submit(): void {
+  addRoom() {
+    this.rooms.push(new FormGroup(this.createDefaultRoom()));
+  }
 
+  async submit(): Promise<void> {
+    const data = { ...this.form.value };
+
+    try {
+      await this.hotelsService.createHotel(data);
+      this.toastService.showSuccess('Hotel creado correctamente');
+    } catch (error) {
+      this.toastService.showSuccess('Ocurrió un error, por favor intente nuevamente');
+    }
   }
 }

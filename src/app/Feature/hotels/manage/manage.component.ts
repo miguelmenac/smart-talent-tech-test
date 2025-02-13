@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { ComponentImports } from './imports.manage';
 import { HotelsService } from '../services/hotels.service';
 import { Hotel } from '../../../Core/models/hotel';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-manage',
   imports: ComponentImports,
-  providers: [HotelsService],
+  providers: [HotelsService, MessageService],
   templateUrl: './manage.component.html',
   styleUrl: './manage.component.scss'
 })

@@ -1,32 +1,82 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
-    <div class="flex flex-row gap-3">
-        <div class="flex-column">
-            <p-floatlabel variant="in">
-                <input pInputText id="in_label" formControlName="name" autocomplete="off" />
-                <label for="in_label">Nombre del hotel</label>
-            </p-floatlabel>
-        </div>
-        <div class="flex-column">
-            <p-floatlabel variant="in">
-                <p-autocomplete size="small" formControlName="location" [suggestions]="cities"
-                    (completeMethod)="search($event)" inputId="location" />
-                <label for="destination">Destino</label>
-            </p-floatlabel>
-        </div>
-        <div class="flex-column">
-            <p-floatlabel variant="in">
-                <input pInputText id="in_label" formControlName="address" autocomplete="off" />
-                <label for="in_label">Nombre del hotel</label>
-            </p-floatlabel>
-        </div>
-        <div class="flex-column">
-            <p-floatlabel variant="in">
+    <p-fieldset legend="Gestionar hotel">
+        <div class="flex flex-row justify-content-center gap-3">
+            <div class="flex-column">
+                <p-floatlabel variant="in">
+                    <input pInputText id="in_label" formControlName="name" autocomplete="off" />
+                    <label for="in_label">Nombre del hotel</label>
+                </p-floatlabel>
+            </div>
+            <div class="flex-column">
+                <p-floatlabel variant="in">
+                    <p-autocomplete formControlName="location" [suggestions]="cities" (completeMethod)="search($event)"
+                        inputId="location" />
+                    <label for="destination">Ciudad</label>
+                </p-floatlabel>
+            </div>
+            <div class="flex-column">
+                <p-floatlabel variant="in">
+                    <input pInputText id="in_label" formControlName="address" autocomplete="off" />
+                    <label for="in_label">Dirección</label>
+                </p-floatlabel>
+            </div>
+            <div class="flex-column">
+                <div class="mb-1">
+                    <label htmlFor="activo">Estado:</label>
+                </div>
                 <p-toggleswitch formControlName="isEnabled"> </p-toggleswitch>
-            </p-floatlabel>
+
+            </div>
         </div>
-    </div>
 
-    <p-button label="Crear" icon="pi pi-check" severity="success" />
-
-
+    </p-fieldset>
+    <p-fieldset legend="Habitaciones">
+        <ng-container formArrayName="rooms">
+            @for (itemForm of rooms.controls; track $index) {
+            <div class="flex justify-content-between gap-3 mb-2" [formGroupName]="$index">
+                <div class="flex-column">
+                    <p-floatlabel variant="in">
+                        <p-inputnumber mode="decimal" formControlName="floor" [useGrouping]="false" inputId="floor" />
+                        <label for="floor">Piso</label>
+                    </p-floatlabel>
+                </div>
+                <div class="flex-column">
+                    <p-floatlabel variant="in">
+                        <input pInputText id="in_label" formControlName="idRoom" autocomplete="off" />
+                        <label for="in_label">Número ej: 401A</label>
+                    </p-floatlabel>
+                </div>
+                <div class="flex-column">
+                    <p-floatlabel variant="in">
+                        <p-inputnumber mode="decimal" [max]="6" formControlName="capacity" [useGrouping]="false"
+                            inputId="floor" />
+                        <label for="floor">Capacidad personas</label>
+                    </p-floatlabel>
+                </div>
+                <div class="flex-column">
+                    <p-floatlabel variant="in">
+                        <p-select [options]="roomTypes" optionLabel="name" optionValue="name" formControlName="type" placeholder="Tipo"
+                            class="w-full md:w-56" />
+                    </p-floatlabel>
+                </div>
+                <div class="flex-column">
+                    <p-floatlabel variant="in">
+                        <p-inputnumber mode="decimal" formControlName="price" [useGrouping]="false"
+                            inputId="price" />
+                        <label for="price">Precio por noche</label>
+                    </p-floatlabel>
+                </div>
+            </div>
+            }
+        </ng-container>
+        <p-divider />
+        <div class="flex">
+            <p-button label="Agregar" icon="pi pi-plus" type="button" (onClick)="addRoom()" severity="success" />
+        </div>
+    </p-fieldset>
+    <footer class="flex justify-content-end mt-3">
+        <p-button label="Crear" icon="pi pi-check" severity="success" type="submit"  [disabled]="form.invalid"/>
+    </footer>
 </form>
+
+<p-toast />
