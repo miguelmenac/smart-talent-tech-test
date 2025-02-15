@@ -11,6 +11,9 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { DividerModule } from 'primeng/divider';
 import { SelectModule } from 'primeng/select';
 import { ToastModule } from 'primeng/toast';
+import { FileUploadModule } from 'primeng/fileupload';
+import { TextareaModule } from 'primeng/textarea';
+
 
 export const ComponentImports = [
     CardModule,
@@ -27,5 +30,7 @@ export const ComponentImports = [
     FieldsetModule,
     DividerModule,
     SelectModule,
-    ToastModule
+    ToastModule,
+    FileUploadModule,
+    TextareaModule
 ]

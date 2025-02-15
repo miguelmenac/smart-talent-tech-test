@@ -8,7 +8,8 @@ import { SelectModule } from 'primeng/select';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
-
+import { BadgeModule } from 'primeng/badge';
+import { ButtonModule } from 'primeng/button';
 export const ComponentImports = [
     TableModule,
     IconFieldModule,
@@ -20,4 +21,7 @@ export const ComponentImports = [
     ReactiveFormsModule,
     CommonModule,
     CardModule,
+    BadgeModule,
+    ButtonModule
+    
 ]

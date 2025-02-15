@@ -1,20 +1,21 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnInit, ViewChild, viewChild } from '@angular/core';
 import { ComponentImports } from './hotel-form.imports';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { DatosAbiertosService } from '../../../../Core/services/datos-abiertos.service';
-import { roomTypes } from '../../../../Core/models/hotel';
+import { Hotel, roomTypes } from '../../../../Core/models/hotel';
 import { HotelsService } from '../../services/hotels.service';
 import { ToastService } from '../../../../Shared/Services/toast.service';
 
 @Component({
   selector: 'app-hotel-form',
   imports: ComponentImports,
-  providers: [DatosAbiertosService, HotelsService, ToastService],
   templateUrl: './hotel-form.component.html',
   styleUrl: './hotel-form.component.scss'
 })
 export class HotelFormComponent implements OnInit {
+  @ViewChild('fu', { static: true }) fileUploadRef: ElementRef | undefined;
+  @Input() editHotel: Hotel | undefined;
   form!: FormGroup;
   cities: string[] = [];
   citiesCopy: string[] = [];
@@ -33,10 +34,24 @@ export class HotelFormComponent implements OnInit {
   datosAbiertosService = inject(DatosAbiertosService);
   hotelsService = inject(HotelsService);
   toastService = inject(ToastService);
+  editMode: boolean = false;
 
   ngOnInit(): void {
     this.buildForm();
     this.queryCities();
+    this.setEditData();
+  }
+
+  setEditData() {
+    if (this.editHotel) {
+      this.editMode = true;
+      this.editHotel.rooms.forEach((room, index) => {
+        if (index > 0) {
+          this.addRoom();
+        }
+      })
+      this.form.patchValue(this.editHotel);
+    }
   }
 
   createDefaultRoom(): { [key: string]: FormControl } {
@@ -55,6 +70,7 @@ export class HotelFormComponent implements OnInit {
       name: new FormControl(null, [Validators.required]),
       location: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
       image: new FormControl(''),
       isEnabled: new FormControl(true),
       rooms: new FormArray([new FormGroup(this.createDefaultRoom())])
@@ -89,12 +105,32 @@ export class HotelFormComponent implements OnInit {
 
   async submit(): Promise<void> {
     const data = { ...this.form.value };
-
     try {
-      await this.hotelsService.createHotel(data);
-      this.toastService.showSuccess('Hotel creado correctamente');
+      let message = 'Hotel creado correctamente';
+      if (this.editMode) {
+        await this.hotelsService.editHotel(data, this.editHotel!.id);
+        message = 'Hotel actualizado correctamente';
+      } else {
+        await this.hotelsService.createHotel(data);
+      }
+      this.toastService.showSuccess(message);
     } catch (error) {
-      this.toastService.showSuccess('Ocurrió un error, por favor intente nuevamente');
+      this.toastService.showError('Ocurrió un error, por favor intente nuevamente');
     }
   }
+
+  async onSelectedFiles(event: any) {
+    const files = event.currentFiles();
+    const reader = new FileReader();
+    const file = files[0];
+    const blob = await fetch(file.objectURL).then((r) => r.blob()); 
+
+    reader.readAsDataURL(blob);
+
+    reader.onloadend = async () => {
+      const base64data = reader.result as string;
+      
+    };
+  }
+
 }

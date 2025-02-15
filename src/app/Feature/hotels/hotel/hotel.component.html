@@ -1,6 +1,6 @@
 <p-card>
     <ng-template #header>
-        <img [src]="hotel.image" alt="">
+        <img width="" [src]="hotel.image || defaultImage" alt="">
     </ng-template>
     <ng-template #title>
         <h3 class="text-primary">{{hotel.name}}</h3>
@@ -13,7 +13,7 @@
     </span>
     <ng-template #footer>
         <div class="flex gap-4 mt-1">
-            <p-button rounded>Ver detalle</p-button>
+            <p-button rounded (onClick)="navigate(hotel.id)">Ver detalle</p-button>
         </div>
     </ng-template>
 </p-card>

@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelsListComponent } from '../hotels/hotels-list/hotels-list.component';
 import { HotelsService } from '../hotels/services/hotels.service';
-import { FirebaseService } from '../../Core/services/firebase.service';
 import { Hotel } from '../../Core/models/hotel';
-
+import { BookingSearchComponent } from '../booking/booking-search/booking-search.component';
 
 @Component({
   selector: 'app-home',
-  imports: [HotelsListComponent],
-  providers: [HotelsService],
+  imports: [HotelsListComponent, BookingSearchComponent],
+  providers: [],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
   hotels: Hotel[] = [];
@@ -19,9 +18,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.hotelsService.getAllHotels().subscribe(({
       next: (hotels) => this.hotels = hotels,
-      error: (err) => {
-        console.log('err', err);
-      },
     }))
   }
 }

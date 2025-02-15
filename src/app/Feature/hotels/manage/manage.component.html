@@ -6,11 +6,11 @@
         <p-button label="Crear hotel" severity="success" type="button" (onClick)="showModal = true" icon="pi pi-plus" />
     </div>
 
-    <app-hotels-table [hotels]="hotels" />
+    <app-hotels-table [hotels]="hotels" (editHotel)="edit($event)" />
 
     <p-dialog [modal]="true" [(visible)]="showModal" [style]="{ width: '80rem' }" (onHide)="showModal = false">
         @if (showModal) {
-        <app-hotel-form />
+        <app-hotel-form [editHotel]="selectedHotel" />
         }
     </p-dialog>
 </div>

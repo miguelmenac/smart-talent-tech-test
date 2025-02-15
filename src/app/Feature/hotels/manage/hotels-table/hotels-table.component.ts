@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ComponentImports } from './hotels-table-imports';
 import { Hotel } from '../../../../Core/models/hotel';
 
@@ -10,5 +10,10 @@ import { Hotel } from '../../../../Core/models/hotel';
 })
 export class HotelsTableComponent {
   @Input() hotels: Hotel[] = [];
+  @Output() editHotel: EventEmitter<Hotel> = new EventEmitter();
   loading: boolean = true;
+
+  edit(hotel: Hotel) {
+    this.editHotel.emit(hotel);
+  }
 }

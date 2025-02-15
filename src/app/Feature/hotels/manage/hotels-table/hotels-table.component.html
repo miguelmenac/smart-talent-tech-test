@@ -1,13 +1,15 @@
 <p-card>
     <p-table [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="hotels.length > 10" [value]="hotels"
-        [scrollable]="true" scrollHeight="400px" [globalFilterFields]="['name', 'location', 'address', 'status']"
+        [scrollable]="true" scrollHeight="800px" [globalFilterFields]="['name', 'location', 'address', 'status']"
         [tableStyle]="{'min-width': '50rem'}">
         <ng-template #header>
             <tr>
-                <th pSortableColumn="name" >Nombre <p-sortIcon field="name" /></th>
+                <th pSortableColumn="name">Nombre <p-sortIcon field="name" /></th>
                 <th pSortableColumn="location">Ubicación <p-sortIcon field="location" /></th>
                 <th pSortableColumn="address">Dirección <p-sortIcon field="address" /></th>
+                <th pSortableColumn="rooms"># Habitaciones<p-sortIcon field="address" /></th>
                 <th pSortableColumn="status">Activo <p-sortIcon field="status" /></th>
+                <th>Editar <p-sortIcon /></th>
             </tr>
             <tr>
                 <th>
@@ -29,7 +31,11 @@
                 <td>{{hotel.name}}</td>
                 <td>{{hotel.location}}</td>
                 <td>{{hotel.address}}</td>
+                <td><p-badge [value]="hotel.rooms?.length" /></td>
                 <td>{{ hotel.enabled ? 'Sí' : 'No'}}</td>
+                <td>
+                    <p-button icon="pi pi-pencil" (click)="edit(hotel)" severity="secondary" rounded />
+                </td>
             </tr>
         </ng-template>
     </p-table>

@@ -1,0 +1,77 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <ng-container formArrayName="travelers">
+        @for (itemForm of travelers.controls; track $index) {
+        <p-fieldset [legend]="getTravelerNumber($index)">
+            <div [formGroupName]="$index">
+                <div class="grid gap-3 mb-2">
+                    <div class="col-3">
+                        <p-floatlabel variant="in">
+                            <input pInputText id="in_label" formControlName="name" autocomplete="off" />
+                            <label for="in_label">Nombre y apellidos</label>
+                        </p-floatlabel>
+                    </div>
+                    <div class="col-3">
+                        <p-floatlabel variant="in">
+                            <p-select [options]="docTypes" optionLabel="name" optionValue="name"
+                                formControlName="docType" placeholder="Tipo de documento" class="w-full md:w-56" />
+                        </p-floatlabel>
+                    </div>
+                    <div class="col-3">
+                        <p-floatlabel variant="in">
+                            <input pInputText id="in_label" formControlName="id" autocomplete="off" />
+                            <label for="in_label">Identificación</label>
+                        </p-floatlabel>
+                    </div>
+                    <div class="col-3">
+                        <p-floatlabel variant="in">
+                            <p-datepicker formControlName="birthDate" size="small" inputId="birthDate" showIcon
+                                iconDisplay="input" />
+                            <label for="birthDate">Fecha de nacimiento</label>
+                        </p-floatlabel>
+                    </div>
+                    <div class="col-3">
+                        <p-floatlabel variant="in">
+                            <p-select [options]="genres" optionLabel="name" optionValue="name" formControlName="genre"
+                                placeholder="Género" class="w-full md:w-56" />
+                        </p-floatlabel>
+                    </div>
+                    <div class="col-3">
+                        <p-floatlabel variant="in">
+                            <input pInputText id="in_label" formControlName="email" autocomplete="off" />
+                            <label for="in_label">Correo</label>
+                        </p-floatlabel>
+                    </div>
+                    <div class="col-3">
+                        <p-floatlabel variant="in">
+                            <input pInputText id="in_label" formControlName="contactPhone" autocomplete="off" />
+                            <label for="in_label">Teléfono</label>
+                        </p-floatlabel>
+                    </div>
+                </div>
+
+                <p-divider />
+            </div>
+
+        </p-fieldset>
+        }
+    </ng-container>
+    <p-fieldset legend="Contacto de emergencia">
+        <div class="grid gap-3 mb-2">
+            <div class="col-3">
+                <p-floatlabel variant="in">
+                    <input pInputText id="emergencyContact" formControlName="nameEmergencyContact" autocomplete="off" />
+                    <label for="emergencyContact">Nombre y apellidos</label>
+                </p-floatlabel>
+            </div>
+            <div class="col-3">
+                <p-floatlabel variant="in">
+                    <input pInputText id="in_label" formControlName="phoneEmergencyContact" autocomplete="off" />
+                    <label for="in_label">Teléfono</label>
+                </p-floatlabel>
+            </div>
+        </div>
+    </p-fieldset>
+    <footer class="flex justify-content-end mt-3">
+        <p-button label="Guardar" icon="pi pi-check" severity="success" type="submit" [disabled]="form.invalid" />
+    </footer>
+</form>

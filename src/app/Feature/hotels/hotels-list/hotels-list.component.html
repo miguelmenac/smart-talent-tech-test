@@ -1,6 +1,6 @@
-<div class="flex flex-row gap-3">
+<div class="grid">
     @for (hotel of hotels; track $index) {
-    <div class="flex-column">
+    <div class=" sm:col-12 md:col-3">
         <app-hotel [hotel]="hotel"></app-hotel>
     </div>
 

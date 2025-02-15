@@ -2,12 +2,13 @@ import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import componentImports from './imports.booking-search';
-import { DatosAbiertosService } from '../../Core/services/datos-abiertos.service';
+
+import { BookingService } from './services/booking.service';
+import { DatosAbiertosService } from '../../../Core/services/datos-abiertos.service';
 
 @Component({
   selector: 'app-booking-search',
   imports: [componentImports],
-  providers: [DatosAbiertosService],
   templateUrl: './booking-search.component.html',
   styleUrl: './booking-search.component.scss'
 })
@@ -17,6 +18,7 @@ export class BookingSearchComponent {
   formGroup!: FormGroup;
 
   datosAbiertosService = inject(DatosAbiertosService);
+  bookingService = inject(BookingService);
 
   ngOnInit(): void {
     this.buildForm();
@@ -47,6 +49,7 @@ export class BookingSearchComponent {
   }
 
   submitData() {
-    console.log('this.formGroup.value', this.formGroup.value);
+    const booking = { ...this.formGroup.value };
+    this.bookingService.searchHotels(booking);
   }
 }

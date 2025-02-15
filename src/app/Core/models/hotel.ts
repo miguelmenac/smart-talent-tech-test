@@ -4,7 +4,8 @@ export interface Hotel {
     image: string;
     enabled: boolean;
     rooms: Room[];
-    descripcion?: string;
+    description?: string;
+    id: string;
 }
 
 export interface Room {

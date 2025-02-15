@@ -22,60 +22,86 @@
             </div>
             <div class="flex-column">
                 <div class="mb-1">
-                    <label htmlFor="activo">Estado:</label>
+                    <label htmlFor="activo">{{ form.get('isEnabled')?.value ? 'Activo' : 'Inactivo' }}:</label>
                 </div>
                 <p-toggleswitch formControlName="isEnabled"> </p-toggleswitch>
 
             </div>
+
+            <div class="card flex flex-col gap-6 items-center justify-center">
+                <p-toast />
+                <p-fileupload #fu mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload" name="demo[]"
+                    accept="image/*" maxFileSize="1000000" (onSelect)="onSelectedFiles($event)" />
+            </div>
+        </div>
+        <div class="flex mt-2 justify-content-center">
+            <p-floatlabel variant="in">
+                <textarea pTextarea id="over_label" formControlName="description" cols="100" rows="5" style="resize: none"
+                    class="h-full"></textarea>
+                <label for="in_label">Agrega una descripción o detalles</label>
+            </p-floatlabel>
         </div>
 
     </p-fieldset>
     <p-fieldset legend="Habitaciones">
         <ng-container formArrayName="rooms">
             @for (itemForm of rooms.controls; track $index) {
-            <div class="flex justify-content-between gap-3 mb-2" [formGroupName]="$index">
-                <div class="flex-column">
-                    <p-floatlabel variant="in">
-                        <p-inputnumber mode="decimal" formControlName="floor" [useGrouping]="false" inputId="floor" />
-                        <label for="floor">Piso</label>
-                    </p-floatlabel>
+            <div [formGroupName]="$index">
+                <div class="flex justify-content-between gap-3 mb-2">
+                    <div class="flex-column">
+                        <p-floatlabel variant="in">
+                            <p-inputnumber mode="decimal" formControlName="floor" [useGrouping]="false"
+                                inputId="floor" />
+                            <label for="floor">Piso</label>
+                        </p-floatlabel>
+                    </div>
+                    <div class="flex-column">
+                        <p-floatlabel variant="in">
+                            <input pInputText id="in_label" formControlName="idRoom" autocomplete="off" />
+                            <label for="in_label">Número ej: 401A</label>
+                        </p-floatlabel>
+                    </div>
+                    <div class="flex-column">
+                        <p-floatlabel variant="in">
+                            <p-inputnumber mode="decimal" [max]="6" formControlName="capacity" [useGrouping]="false"
+                                inputId="floor" />
+                            <label for="floor">Capacidad personas</label>
+                        </p-floatlabel>
+                    </div>
+                    <div class="flex-column">
+                        <p-floatlabel variant="in">
+                            <p-select [options]="roomTypes" optionLabel="name" optionValue="name" formControlName="type"
+                                placeholder="Tipo" class="w-full md:w-56" />
+                        </p-floatlabel>
+                    </div>
+                    <div class="flex-column">
+                        <p-floatlabel variant="in">
+                            <p-inputnumber mode="decimal" formControlName="price" [useGrouping]="false"
+                                inputId="price" />
+                            <label for="price">Precio por noche</label>
+                        </p-floatlabel>
+                    </div>
                 </div>
-                <div class="flex-column">
-                    <p-floatlabel variant="in">
-                        <input pInputText id="in_label" formControlName="idRoom" autocomplete="off" />
-                        <label for="in_label">Número ej: 401A</label>
-                    </p-floatlabel>
+                <div class="flex">
+                    <div class="mb-1">
+                        <label htmlFor="activo">{{ itemForm.get('enabled')?.value ? 'Activo' : 'Inactivo' }}</label>
+                        <p-toggleswitch formControlName="enabled"> </p-toggleswitch>
+                    </div>
+
                 </div>
-                <div class="flex-column">
-                    <p-floatlabel variant="in">
-                        <p-inputnumber mode="decimal" [max]="6" formControlName="capacity" [useGrouping]="false"
-                            inputId="floor" />
-                        <label for="floor">Capacidad personas</label>
-                    </p-floatlabel>
-                </div>
-                <div class="flex-column">
-                    <p-floatlabel variant="in">
-                        <p-select [options]="roomTypes" optionLabel="name" optionValue="name" formControlName="type" placeholder="Tipo"
-                            class="w-full md:w-56" />
-                    </p-floatlabel>
-                </div>
-                <div class="flex-column">
-                    <p-floatlabel variant="in">
-                        <p-inputnumber mode="decimal" formControlName="price" [useGrouping]="false"
-                            inputId="price" />
-                        <label for="price">Precio por noche</label>
-                    </p-floatlabel>
-                </div>
+
+
+                <p-divider />
             </div>
             }
         </ng-container>
-        <p-divider />
         <div class="flex">
             <p-button label="Agregar" icon="pi pi-plus" type="button" (onClick)="addRoom()" severity="success" />
         </div>
     </p-fieldset>
     <footer class="flex justify-content-end mt-3">
-        <p-button label="Crear" icon="pi pi-check" severity="success" type="submit"  [disabled]="form.invalid"/>
+        <p-button [label]="!editMode ? 'Crear' : 'Actualizar'" icon="pi pi-check" severity="success" type="submit"
+            [disabled]="form.invalid" />
     </footer>
 </form>
 
