@@ -18,7 +18,7 @@ export class FirebaseService {
 
   constructor(private firestore: Firestore) { }
 
-  getDocuments(collectionName: string): Observable<DocumentData> {
+  getDocuments(collectionName: string): Observable<DocumentData[]> {
     const coll = collection(this.firestore, collectionName);
     return collectionData(coll, {
       idField: 'id'

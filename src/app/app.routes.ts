@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './Feature/home/home.component';
 import { ManageComponent } from './Feature/hotels/manage/manage.component';
 import { HotelDetailComponent } from './Feature/hotels/hotel-detail/hotel-detail.component';
+import { BookingsManageComponent } from './Feature/booking/bookings-manage/bookings-manage.component';
 
 export const routes: Routes = [
     {
@@ -10,6 +11,8 @@ export const routes: Routes = [
         pathMatch: 'full'
     },
 
+    { path: '**', component: HomeComponent },
+
     {
         path: 'home',
         component: HomeComponent
@@ -17,13 +20,13 @@ export const routes: Routes = [
     {
         path: 'manage',
         component: ManageComponent
-    }, 
+    },
     {
         path: 'bookings',
-        component: HomeComponent
-    }, 
+        component: BookingsManageComponent
+    },
     {
         path: 'detail/:id',
         component: HotelDetailComponent
-    }, 
+    },
 ];

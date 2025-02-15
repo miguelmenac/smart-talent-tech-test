@@ -1,0 +1,41 @@
+<div class="text-center mb-3">
+    <h1 class="text-primary">Gestion de reservas</h1>
+    <label htmlFor="descripcion">Consulta todas las reservas activas</label>
+</div>
+
+<p-card>
+    <p-table [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="bookings.length > 10" [value]="bookings"
+        [scrollable]="true" scrollHeight="800px" [globalFilterFields]="['hotelName', 'email', 'name', 'id']"
+        [tableStyle]="{'min-width': '50rem'}">
+        <ng-template #header>
+            <tr>
+                <th pSortableColumn="hotelName">Hotel <p-sortIcon field="hotelName" /></th>
+                <th pSortableColumn="travelers[0].name">Titular reserva<p-sortIcon field="travelers[0].name" /></th>
+                <th pSortableColumn="initialDate">Desde<p-sortIcon field="initialDate" /></th>
+                <th pSortableColumn="endDate">Hasta<p-sortIcon field="endDate" /></th>
+                <th pSortableColumn="numberOfPeople"># Personas<p-sortIcon field="numberOfPeople" /></th>
+                <th pSortableColumn="roomId">Habitación<p-sortIcon field="roomId" /></th>
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="hotelName" placeholder="Buscar por hotel"
+                        ariaLabel="Filter Name"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="travelers[0].name" placeholder="Buscar por titular"
+                        ariaLabel="Filter person"></p-columnFilter>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-booking>
+            <tr>
+                <td>{{booking.hotelName}}</td>
+                <td>{{booking.travelers[0].name}}</td>
+                <td>{{booking.initialDate | date }}</td>
+                <td>{{booking.endDate | date }}</td>
+                <td><p-badge [value]="booking.numberOfPeople" /></td>
+                <td>{{ booking.roomId}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>

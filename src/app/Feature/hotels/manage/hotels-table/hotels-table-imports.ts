@@ -23,5 +23,4 @@ export const ComponentImports = [
     CardModule,
     BadgeModule,
     ButtonModule
-    
 ]

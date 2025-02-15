@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/3c5619c9-860c-49d3-8d47-4784571ce759/resourceGroups/LocalHotels_group/providers/Microsoft.Web/sites/LocalHotels",
+    "appService.deploySubpath": "dist\\local-hotels\\browser"
+}

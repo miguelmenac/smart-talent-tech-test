@@ -14,6 +14,7 @@ export const environment = {
         appId: "1:934978263156:web:d055f7a8da72bde08d9921",
         measurementId: "G-NF73H5LPD4"
     },
-    datosAbiertos:'https://www.datos.gov.co/resource/xdk5-pm3f.json',
+    datosAbiertos: 'https://www.datos.gov.co/resource/xdk5-pm3f.json',
+    emailApiUrl: 'https://us-central1-mepovapp-b9805.cloudfunctions.net/sendMail'
 }
 

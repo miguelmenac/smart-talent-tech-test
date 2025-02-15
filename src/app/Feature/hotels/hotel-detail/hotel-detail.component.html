@@ -60,7 +60,7 @@
 
 <p-dialog [modal]="true" [(visible)]="showModal" [style]="{ width: '80rem' }" (onHide)="showModal = false">
     @if (showModal) {
-    <app-booking-form [hotelId]="idHotel!" [roomId]="idRoom!" (onClose)="handleClose($event)"/>
+    <app-booking-form [hotel]="hotel" [roomId]="idRoom!" (onClose)="handleClose($event)" />
     }
 </p-dialog>
 <p-toast></p-toast>

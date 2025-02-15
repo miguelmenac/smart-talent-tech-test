@@ -4,7 +4,16 @@ export interface Booking {
     initialDate: Date;
     endDate: Date;
 }
-export interface BookingFull {
+export interface BookingFull extends Booking {
+    travelers: TravelersData[];
+    nameEmergencyContact: string;
+    phoneEmergencyContact: string;
+    roomId: string;
+    hotelId: string;
+    hotelName: string;
+}
+
+export interface TravelersData {
     name: string;
     docType: string;
     id: string;
@@ -12,6 +21,4 @@ export interface BookingFull {
     birthDate: Date;
     email: string;
     contactPhone: string;
-    roomId: string;
-    hotelId: string;
 }

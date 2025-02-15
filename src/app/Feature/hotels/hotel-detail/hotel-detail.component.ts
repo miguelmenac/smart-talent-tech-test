@@ -39,7 +39,8 @@ export class HotelDetailComponent implements OnInit {
   async getHotel(): Promise<void> {
     if (this.idHotel) {
       const hotel = await this.hotelsService.getHotelById(this.idHotel);
-      this.hotel = hotel;
+      this.hotel = hotel
+      this.hotel.id = this.idHotel;
       this.calculateTotal();
     }
 

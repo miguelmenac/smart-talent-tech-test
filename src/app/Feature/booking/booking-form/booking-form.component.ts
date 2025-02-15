@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { ComponentImports } from './booking-form.imports';
 import { DOOCTYPES, GENRES } from '../../../Core/constants';
 import { BookingService } from '../booking-search/services/booking.service';
+import { Hotel } from '../../../Core/models/hotel';
+import { Booking } from '../../../Core/models/booking';
 
 @Component({
   selector: 'app-booking-form',
@@ -11,11 +13,12 @@ import { BookingService } from '../booking-search/services/booking.service';
   styleUrl: './booking-form.component.scss'
 })
 export class BookingFormComponent {
-  @Input() hotelId: string = '';
+  @Input() hotel: Hotel | undefined;
   @Input() roomId: string = '';
   @Output() onClose: EventEmitter<boolean> = new EventEmitter();
   form!: FormGroup;
   bookingService = inject(BookingService);
+  booking: Booking | undefined;
 
   ngOnInit(): void {
     this.buildForm();
@@ -24,6 +27,7 @@ export class BookingFormComponent {
   buildForm(): void {
     this.bookingService.getBookingSearch
       .subscribe((booking) => {
+        this.booking = booking;
         const travelersArray = Array.from({ length: booking.numberOfPeople }, (_, index) => index + 1).map((x: any) => x = new FormGroup(this.createDefaultTraveler()));
         this.form = new FormGroup({
           travelers: new FormArray(travelersArray),
@@ -65,7 +69,7 @@ export class BookingFormComponent {
 
   async submit(): Promise<void> {
     try {
-      const booking = { ...this.form.value, hotelId: this.hotelId, roomId: this.roomId };
+      const booking = { ...this.form.value, hotelId: this.hotel?.id, hotelName: this.hotel?.name, roomId: this.roomId, ...this.booking };
       await this.bookingService.createBooking(booking);
       this.onClose.emit(true);
     } catch (error) {
