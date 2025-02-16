@@ -10,9 +10,6 @@ export const routes: Routes = [
         redirectTo: '/home',
         pathMatch: 'full'
     },
-
-    { path: '**', component: HomeComponent },
-
     {
         path: 'home',
         component: HomeComponent
@@ -29,4 +26,6 @@ export const routes: Routes = [
         path: 'detail/:id',
         component: HotelDetailComponent
     },
+    { path: '**', component: HomeComponent },
+
 ];
